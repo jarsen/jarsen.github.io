@@ -1,21 +1,19 @@
 # SITE CONFIGURATION
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://example.com" # the base hostname & protocol for your site
+url: "http://jasonlarsen.me" # the base hostname & protocol for your site
 
 # THEME-SPECIFIC CONFIGURATION
 theme:
   # Meta
-  title: Type Theme
+  title: Jason Larsen
   avatar: avatar.png
-  gravatar: # Email MD5 hash
-  description: "A website with blog posts and pages" # used by search engines
+  gravatar: "e311fda4ecba74ce61a133afd87da312"
+  description: "Programming. Mostly in Swift and Elixir. " # used by search engines
 
   # Header and footer text
   header_text: >
-     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-
-     <p>Remove all header text in <code>_config.yml</code> to disable this feature.</p>
-  header_text_feature_image:
+    <p>A blog about programming, mostly in Swift and Elixir.</p>
+  header_text_feature_image: "img/header.gif"
   footer_text: >
    Powered by <a href="http://jekyllrb.com">Jekyll</a> with <a href="https://rohanchandra.github.io/project/type/">Type Theme</a>
 
@@ -27,7 +25,7 @@ theme:
   dribbble:
   facebook:
   flickr:
-  github: "rohanchandra/type-theme"
+  github: "jarsen"
   google_plus:
   instagram:
   linkedin:  # Full URL
@@ -37,13 +35,13 @@ theme:
   stack_exchange:  # Full URL
   steam:
   tumblr:
-  twitter: "twitter"
+  twitter: "jarsen"
   wordpress:
   youtube:
 
   # Scripts
   google_analytics: # Tracking ID, e.g. "UA-000000-01"
-  disqus_shortname:
+  disqus_shortname: "jarsen"
   katex: true # Enable if using math markup
 
   # Localization strings
