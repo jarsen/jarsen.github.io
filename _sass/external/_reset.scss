@@ -226,7 +226,12 @@ pre {
  * Address odd `em`-unit font size rendering in all browsers.
  */
 
-code,
+code {
+  font-family: monospace, monospace;
+  font-size: 0.95em;
+}
+
+
 kbd,
 pre,
 samp {
