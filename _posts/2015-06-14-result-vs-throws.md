@@ -261,17 +261,6 @@ fetchJSON("/api/v3/users") { result in
 I think the equivalent code using `Result` is much better: I have a single switch that handles
 _all_ cases.
 
-That said, at first glance, `Result` may not seem to fit in all cases. For example:
-
-{% highlight swift %}
-func dataTaskWithURL(url: NSURL, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> NSURLSessionDataTask?
-{% endhighlight %}
-
-It might be hard to see where `Result` fits in, because even in the case where NSError is non-nil,
-you may want to look in the `NSURLResponse`. In these cases, you have to change your thinking a little,
-and include the relevant information in your `.Failure` case—most likely as an associated value in your
-`ErrorType` enum.
-
 ## No Asserts
 
 Currently there are no functions available in the `XCTAssert` family for asserting whether or not
