@@ -9,7 +9,7 @@ apple have been doing an *amazing* job.
 I have been loving Swift the past year and am really excited about all the new
 features—and, of course, the open source announcement.
 
-When the `do`/`catch` model for error handling was announced, I there was a bit of frustration
+When the `do`/`catch` model for error handling was announced, there was a bit of frustration
 that `Result` was not the adopted model. Since then, several developers have come out
 with [articles](http://www.sunsetlakesoftware.com/2015/06/12/swift-2-error-handling-practice)
 detailing what they [like better](http://owensd.io/2015/06/12/swift-throws-get-it.html) about it
