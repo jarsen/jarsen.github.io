@@ -68,14 +68,14 @@ try! functionThatThrows() // forces execution without a catch
 Both approaches can ignore errors. Sure, `try!` will make your program crash if something throws,
 and you might not think that counts as ignoring errors, but I can see the lazy programmer putting
 this in because it works in dev every time, or because it rarely executes, or because for some reason
-functionThatThrows() only throws a fraction of the time. It's an open invitation to shoot yourself in the foot.
-It may be a more dangerous way to ignore errors, but its ignoring them nonetheless.
+`functionThatThrows()` only throws a fraction of the time. It's an open invitation to shoot yourself in the foot.
+It is a more dangerous way to ignore errors, but it ignores them nonetheless.
 
 Finally, the cynic in me says many will end up writing empty `catch` statements, or else simply:
 
 {% highlight swift %}
 do {
-    // stuff
+    try stuff()
 }
 catch {
     print("Error while doing stuff")
@@ -86,8 +86,8 @@ I don't know if this really qualifies as "handling" anything.
 
 And in many cases not doing anything with an error might be the right thing to do.
 
-I don't think that making it impossible to ignore errors is the ultimate goal here; I think
-the goal is to make it difficult to ignore errors.
+Ultimately I don't think that making it impossible to ignore errors is the goal here; I think
+the goal should be to make it difficult to ignore errors.
 
 ## Exhaustive
 
@@ -156,7 +156,7 @@ I believe error types belong in the function contract. `Result` forces the API t
 communicate to its caller what in can expect in both the successful case, and in the case
 of failure.
 
-**Failing to communicate about the error path in the contract implies that for some reason
+**Failing to communicate about the error path in the function contract implies that for some reason
 the "happy path" is more important.** How can you expect to build robust error handling
 with a lackadaisical approach to error handling contracts?
 
@@ -174,8 +174,8 @@ catch {
 }
 {% endhighlight %}
 
-If `thing1()` fails, `thing2()` will never be executed. In many cases that might be fine.
-However, what if you actually want to do something different in the case that both fail,
+If `thing1()` fails, `thing2()` will never be executed. In many cases that might be the desired
+behavior. However, what if you actually want to do something different in the case that both fail,
 or in the case that only one fails? Using `throws` makes this difficult to impossible, as
 `throws` will hijack your code flow and immediately terminate the `do` block.
 
@@ -200,7 +200,7 @@ in a more robust manner. This also makes `Result` a great candidate for asynchro
 ## Async Error Handling
 
 One of the main arguments I've seen against `throws` is that is has no way of handling asynchronous
-errors. Async error handling is a big deal—most of my error handling code is revolves around
+errors. Async error handling is a big deal—most of my error handling code revolves around
 async networking errors. That said, I actually think that this point has been a little over-exaggerated by
 those contending for `Result`—async errors are just handled with a different pattern altogether.
 However, I still believe `Result` is better than said solution. Take a look at this async networking function.
@@ -277,7 +277,9 @@ and include the relevant information in your `.Failure` case—most likely as an
 Currently there are no functions available in the `XCTAssert` family for asserting whether or not
 a function or closure throw an error.
 
-Here's how you might write one:
+Please join me in filing a [radar](http://bugreport.apple.com).
+
+Here's how you might write one in the meantime:
 
 {% highlight swift %}
 func XCTAssertThrows<A>(file: String = __FILE__, line: Int = __LINE__, test: () throws -> A) {
@@ -290,8 +292,6 @@ func XCTAssertThrows<A>(file: String = __FILE__, line: Int = __LINE__, test: () 
     }
 }
 {% endhighlight %}
-
-Please join me in filing a [radar](http://bugreport.apple.com).
 
 ## throws is "simpler"
 
@@ -311,7 +311,7 @@ I don't know that I would say the introduction of 5 new keywords is "simple".
 
 One gripe with `Result` I see is that sometimes people end up having to type something as `Result<(), ErrorType>`
 because all they really want is a pure Failure. I agree, it can feel a little weird. However, it's not that
-hard, it's rare, and you really only do it when you're going to map it to something else later.
+hard, it's rare, and you really only do it when you're going to `map` it to something else later.
 
 If you find yourself doing this often, I would reexamine your code. Are you really using `Result` in the
 correct places? If all you're doing is returning whether an operation fails or not, and you don't care
@@ -321,12 +321,12 @@ what the error is, return a `Bool` instead, or perhaps an `ErrorType?`.
 
 `Result` brings with it a lot of powerful functional programming ideas and higher order functions. Talking
 about `apply`, `map`, and `flatMap` is really beyond the scope of this post (plus I don't want to say the
-words: Applicative, Functor, or Monad). Perhaps this is where some of the fear of complexity comes from.
-But they're really not complex—just new ways of thinking.
+words: Applicative, Functor, or Monad so you keep reading). Perhaps this is where some of the fear of complexity
+comes from. But they're really not complex—just new ways of thinking.
 
-They also enable powerful abstractions like JSON parsing a la [Argo](http://github.com/thoughtbot/argo), or
-my [Pipes](http://github.com/jarsen/pipes) library I [blogged about the other week](http://jasonlarsen.me/2015/05/23/pipes.html). I think the forward pipe operator is a huge advantage
-`Result` has. **The forward pipe operator allows you to compose a data pipeline completely agnostic towards optionals or results.** And it reads so nice:
+Such higher order functions enable powerful abstractions like JSON parsing a la [Argo](http://github.com/thoughtbot/argo), or
+my [Pipes](http://github.com/jarsen/pipes) library I [blogged about the other week](http://jasonlarsen.me/2015/05/23/pipes.html). The forward pipe operator makes working with
+`Result` awesome. **The forward pipe operator allows you to compose a data pipeline completely agnostic towards optionals or results.** And it reads so nice:
 
 {% highlight swift %}
 let processedText = inputFileName
@@ -334,6 +334,8 @@ let processedText = inputFileName
                     |> readFile
                     |> processText
 {% endhighlight %}
+
+But I'm biased there. :)
 
 ## But, Standards...
 
