@@ -56,7 +56,7 @@ let _ = someResultFunction() // ignore result entirely
 Both these arguments have good points. Although in the latter case, the only reason
 someone would do this is to run a function that performs side effects, in which case
 I would argue that the number of functions performing side effects and returning
-_syncronous_ errors where you don't care about the successful value of the operation
+_synchronous_ errors where you don't care about the successful value of the operation
 is pretty small. If you have a lot of these, I think you're using `Result` wrong.
 
 And finally, look what I can do:
