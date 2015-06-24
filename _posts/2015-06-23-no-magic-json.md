@@ -4,13 +4,13 @@ title: No-Magic JSON Parsing with Swift
 feature-img: "img/wizards_only_fools.png"
 ---
 
-Since the beginning, JSON parsing has been a common pain point for Swift many developers. This is largely  due to difficulties in dealing with a strict type system (which JSON does not have) and optionals, as well as a lack of a consistent error handling approach.
+Since the beginning, JSON parsing has been a common pain point for many Swift developers. This is largely  due to difficulties in dealing with a strict type system (which JSON does not have) and optionals, as well as a lack of a consistent error handling approach.
 
 Several great JSON parsing libraries have surfaced which avoid the mess of tangled if-lets (a.k.a. the infamous "pyramid of doom"). I really like the approach taken by thoughtbot in their [JSON](https://robots.thoughtbot.com/efficient-json-in-swift-with-functional-concepts-and-generics) [parsing](https://robots.thoughtbot.com/real-world-json-parsing-with-swift) articles, which ultimately led to their [Argo](https://github.com/thoughtbot/Argo) library on github (although I don't like everything about Argo).
 
-However, most solutions tend to rely on a lot of magic: the magic of applicatives, functors, and monads; the magic of unfamiliar custom operators; the magic of a complex nested enum structure.
+However, most solutions tend to rely on a lot of magic: the magic of applicatives, functors, and monads; the magic of unfamiliar custom operators; the magic of a complex nested enum structure; the magic of multiple external dependencies.
 
-Now that swift 2.0 has brought error handling to us, we can have much less magical JSON parsing. Here is an example of what your JSON parsing code might look like with just a thin error-throwing layer over `[String:AnyObject]`.
+Now that swift 2.0 has brought error handling to us, we can implement much less magical JSON parsing. Here is an example of what your JSON parsing code might look like with just a thin error-throwing layer over `[String:AnyObject]`.
 
 ## Let's Get Started
 
@@ -63,7 +63,7 @@ class JSONObject {
 }
 {% endhighlight %}
 
-Here we've added a bunch of functions that let us get basic things like `String`, `Int`, and `Double` out of our `[String:AnyObject]` Pandora's Box. If we either find a nil or NSNull value, we know the key is bad. And if we find the wrong type object hidden behind the `AnyObject` we throw a `TypeMismatch` error.
+Here we've added a bunch of functions that let us get basic things like `String`, `Int`, and `Double` out of our `[String:AnyObject]` Pandora's Box. If we either find a nil or NSNull value, we know the key is bad. And if we find an unexpected type hidden behind the `AnyObject` we throw a `TypeMismatch` error.
 
 How does this look in practice? Let's try it on a simple `Person` model.
 
@@ -177,10 +177,10 @@ And, because we implemented our `optionalForKey` on top of `valueForKey`, everyt
 
 ## Conclusion
 
-The Swift 2.0 beta2 brings _extensions to generic types_. Generic types extensions allow us to add functionality to things like `Array` and `Dictionary` in specific cases. Unfortunately for the moment it seems that you can't give it specific types for Key/Value, only protocol conformance. If we could specify specific types, we could extend `[String:AnyObject]` and typealias it to `JSONObject` instead of having a wrapper class.
-
-I think this JSON code is quite nice, and easy for anyone to understand without having their mind blown. Even though [I went a little caremad the other week about Result](http://jasonlarsen.me/2015/06/14/result-vs-throws.html), I like how this code turned out better than my old `Result` based JSON parsing: it's easier to explain to others, and it's much easier on the compiler, which saves you time when trying to figure out what is wrong. It is also much more idiomatic.
+I think this JSON code is quite nice, and easy for anyone to understand without having their mind blown. Even though [I went a little caremad the other week about Result](http://jasonlarsen.me/2015/06/14/result-vs-throws.html), I like how this code turned out better than my old `Result` based JSON parsing: it's easier to explain to others, and it's much easier on the compiler, which saves you time when trying to figure out what is wrong. It is also more idiomatic.
 
 I'm sure there are some cool ways to improve this code, I'd love to hear your thoughts! Please leave a comment or give me a shout on [twitter](http://twitter.com/jarsen) ([@jarsen](http://twitter.com/jarsen))
+
+The Swift 2.0 beta2 brings _extensions to generic types_. Generic types extensions allow us to add functionality to things like `Array` and `Dictionary` in specific cases. Unfortunately for the moment it seems that you can't give it specific types for Key/Value, only protocol conformance. If we could specify specific types, we could extend `[String:AnyObject]` and typealias it to `JSONObject` instead of having a wrapper class.
 
 And here's [the final code](https://gist.github.com/jarsen/2b0913111c0427642c41) all in one gist.
