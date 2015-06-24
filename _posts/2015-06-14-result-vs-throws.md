@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Result vs. Throws
-feature-img: "img/pipe.jpg"
+feature-img: "img/wizards_only_fools.png"
 ---
 
 Swift 2.0 is causing a lot of well deserved excitement. Chris and the folks over at

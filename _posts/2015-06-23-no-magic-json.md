@@ -1,7 +1,7 @@
 ---
 layout: post
 title: No-Magic JSON Parsing with Swift
-feature-img: "img/header.jpg"
+feature-img: "img/header.gif"
 ---
 
 Since the beginning, JSON parsing has been a common pain point for Swift many developers. This is largely  due to difficulties in dealing with a strict type system (which JSON does not have) and optionals, as well as a lack of a consistent error handling approach.
