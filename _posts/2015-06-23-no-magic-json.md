@@ -130,8 +130,9 @@ extension JSONObject {
         return try optionalForKey(key, type: [A].self)
     }
 
-    func objectOptionalForKey(json: JSONObject, key: String) throws -> JSONObject? {
-        return try optionalForKey(key, type: JSONObject.self)
+    func objectOptionalForKey(key: String) throws -> JSONObject? {
+        let dict = try optionalForKey(key, type: [String:AnyObject].self)
+        return dict.map(JSONObject.init)
     }
 }
 {% endhighlight %}
