@@ -185,3 +185,5 @@ I'm sure there are some cool ways to improve this code, I'd love to hear your th
 The Swift 2.0 beta2 brings _extensions to generic types_. Generic types extensions allow us to add functionality to things like `Array` and `Dictionary` in specific cases. Unfortunately for the moment it seems that you can't give it specific types for Key/Value, only protocol conformance. If we could specify specific types, we could extend `[String:AnyObject]` and typealias it to `JSONObject` instead of having a wrapper class.
 
 And here's [the final code](https://gist.github.com/jarsen/2b0913111c0427642c41) all in one gist.
+
+Update: Be sure to check out [Part 2](http://jasonlarsen.me/2015/06/23/no-magic-json-pt2.html)), in which we make the code even better by relying more heavily on type inference.
