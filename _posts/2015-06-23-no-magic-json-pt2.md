@@ -63,13 +63,13 @@ func valueForKey<A>(key: String) throws -> A {
 }
 {% endhighlight %}
 
-Et voila.
-
 And we can use it like so:
 
 {% highlight swift %}
 let street: String = try json.valueForKey("address.street")
 {% endhighlight %}
+
+Et voila.
 
 This means that we can remove all of our `intForKey`, `stringForKey`, etc. And, if we revamp our `optionalForKey` in the same way by also removing the `type` argument, we can do the same for all our calls to `optionalForKey`. The only functions I didn't remove in my implementation were `objectForKey` and `optionalObjectForKey` because since the values there are really `[String:AnyObject]` you can't get a `JSONObject` out without the initializer.
 
@@ -82,25 +82,6 @@ struct Person {
     var height: Double
     var street: String?
 
-    static func fromJSON(json: JSONObject) throws -> Person {
-        let name: String = try json.valueForKey("name")
-        let age: Int = try json.valueForKey("age")
-        let height: Double = try json.valueForKey("height")
-        let street: String = try json.valueForKey("address.street")
-        return Person(name: name, age: age, height: height, street: street)
-    }
-}
-{% endhighlight %}
-
-But there's more... if you like supplying default values for your structs you can do the following.
-
-{% highlight swift %}
-struct Person {
-    var name = ""
-    var age = 0
-    var height = 0.0
-    var street = String?.None
-
     init(json: JSONObject) throws {
         try name = json.valueForKey("name")
         try age = json.valueForKey("age")
@@ -109,8 +90,6 @@ struct Person {
     }
 }
 {% endhighlight %}
-
-I don't know if I like supplying default values for all my struct's vars (sometimes a default value doesn't make sense—what does it mean to be a default name or height?), but it does clean the code up.
 
 I hope you've enjoyed this. As always, comments are welcome—either down below or on [twitter](http://twitter.com/jarsen) ([@jarsen](http://twitter.com/jarsen))
 
