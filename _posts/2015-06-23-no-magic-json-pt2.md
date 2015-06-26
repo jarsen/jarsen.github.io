@@ -134,6 +134,8 @@ struct Person {
 }
 {% endhighlight %}
 
+We got rid of `fromJSON` in favor of `init`. This gives us the opportunity to set all the values before the object is initialized—the only trick is that our initializer now throws.
+
 I like that. I hope you do too.
 
  As always, comments are welcome—either down below or on [twitter](http://twitter.com/jarsen) ([@jarsen](http://twitter.com/jarsen))
