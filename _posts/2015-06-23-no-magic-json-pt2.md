@@ -82,6 +82,49 @@ struct Person {
     var height: Double
     var street: String?
 
+    static func fromJSON(json: JSONObject) throws -> Person {
+        let name: String = try json.valueForKey("name")
+        let age: Int = try json.valueForKey("age")
+        let height: Double = try json.valueForKey("height")
+        let street: String = try json.valueForKey("address.street")
+        return Person(name: name, age: age, height: height, street: street)
+    }
+}
+{% endhighlight %}
+
+Now, having to specify the type in two places is a little much, don't you think?
+Surely we can do better. Since the items we're assigning them to already have types,
+why not use those?
+
+{% highlight swift %}
+struct Person {
+    var name = ""
+    var age = 0
+    var height = 0.0
+    var street = String?.None
+
+    static func fromJSON(json: JSONObject) throws -> Person {
+        var person = Person()
+        person.name = try json.valueForKey("name")
+        person.age = try json.valueForKey("age")
+        person.height = try json.valueForKey("height")
+        person.street = try json.optionalForKey("address.street")
+        return person
+    }
+}
+{% endhighlight %}
+
+So, to do that we had to assign default values... which is a little weird as well. What does it mean to have a "default height"? This also is a little unsafe because now the API allows for `Person`s to be created without any arguments.
+
+Let's try again, but let's forget about `fromJSON`
+
+{% highlight swift %}
+struct Person {
+    var name: String
+    var age: Int
+    var height: Double
+    var street: String?
+
     init(json: JSONObject) throws {
         try name = json.valueForKey("name")
         try age = json.valueForKey("age")
@@ -91,6 +134,8 @@ struct Person {
 }
 {% endhighlight %}
 
-I hope you've enjoyed this. As always, comments are welcome—either down below or on [twitter](http://twitter.com/jarsen) ([@jarsen](http://twitter.com/jarsen))
+I like that. I hope you do too.
+
+ As always, comments are welcome—either down below or on [twitter](http://twitter.com/jarsen) ([@jarsen](http://twitter.com/jarsen))
 
 You can get the [full code here](https://gist.github.com/jarsen/b27de2ed9e84b84086ae)
