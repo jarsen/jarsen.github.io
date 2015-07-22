@@ -82,7 +82,7 @@ Sometimes you want to delete text. These keybindings will help you delete effici
 | ⌥⌫ | Backward delete a word |
 | ⌥⌦ | Forward delete a word |
 | ⌃k | Delete to end of line (**k**ill) (also  ⌘⌦) |
-| ⌘⌫ | Delete to beginning of line |
+| ⌘⌫ | Delete to beginning of line (this is not really an Emacs binding, but a must-know nonetheless) |
 
 (⌫ is the backspace key, and ⌦ is the Delete key)
 
