@@ -212,3 +212,5 @@ You can find the full code in this [gist](https://gist.github.com/jarsen/0f0919d
 Please share this if you like it and leave me feedback below in the comments or on the twitters [@jarsen](https://twitter.com/jarsen)!
 
 I hope this makes Crusty proud.
+
+A special thanks to a bunch of local Utah iOS developers who have been working on this and giving lots of great ideas, especially: Bart Whiteley, Brian Mullen, BJ Homer, Derrick Hathaway, Dave DeLong, Mark Schultz and Tim Shadel.
